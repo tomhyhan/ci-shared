@@ -17,7 +17,7 @@ def call(dockerRepoName, imageName, app) {
             steps {
                 withCredentials([string(credentialsId: 'DockerHub', variable: 'TOKEN')]) {
                     sh "docker login -u tomhyhan -p '$TOKEN' docker.io"
-                    sh "docker build -t ${dockerRepoName}:latest --tag tomhyhan/${dockerRepoName}:${imageName} ."
+                    sh "docker build -t ${app}/${dockerRepoName}:latest --tag tomhyhan/${dockerRepoName}:${imageName} ./${app}/."
                     sh "docker push tomhyhan/${dockerRepoName}:${imageName}"
                 }
             }
