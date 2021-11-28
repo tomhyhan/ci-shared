@@ -27,13 +27,14 @@ def call(dockerRepoName, imageName, app) {
                 withCredentials([string(credentialsId: 'DockerHub', variable: 'TOKEN')]) {
                     sh "docker login -u tomhyhan -p '$TOKEN' docker.io"
                     sh "docker scan tomhyhan/${dockerRepoName}:${imageName} --accept-license > ${app}.txt"
-                    sh 'zip app.zip ${app}.txt'
+                    sh "zip app.zip ${app}.txt"
                 }
             }
             post {
-            always {
-                archiveArtifacts artifacts: 'app.zip', 
-                onlyIfSuccessful: true
+                always {
+                    archiveArtifacts artifacts: 'app.zip', 
+                    onlyIfSuccessful: true
+                }
             }
         }
     }
