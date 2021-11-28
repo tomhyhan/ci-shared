@@ -25,8 +25,8 @@ def call(dockerRepoName, imageName, app) {
         stage('Scan') {
             steps {
                 withCredentials([string(credentialsId: 'DockerHub', variable: 'TOKEN')]) {
-                    // sh "docker login -u tomhyhan -p '$TOKEN' docker.io"
-                    sh "docker scan --login --token '$TOKEN' ${app}/${dockerRepoName}:latest --accept-license > ${app}.txt"
+                    sh "docker login -u tomhyhan -p '$TOKEN' docker.io"
+                    sh "docker scan --accept-license tomhyhan/${dockerRepoName}:${imageName}  > ${app}.txt"
                     sh "zip app.zip ${app}.txt"
                 }
             }
